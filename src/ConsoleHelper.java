@@ -19,7 +19,7 @@ public class ConsoleHelper {
                     case ("0"):
                         break;
                     case ("1"):
-                        if (customCollectionInitialized()){
+                        if (isCustomCollectionInitialized()){
                             System.out.println("The collection is already initialized");
                              break;
                         }
@@ -32,7 +32,7 @@ public class ConsoleHelper {
                         }
                         break;
                     case("2"):
-                        if (customCollectionInitialized()){
+                        if (isCustomCollectionInitialized()){
                             System.out.println("The collection is already initialized");
                             break;
                         }
@@ -40,14 +40,14 @@ public class ConsoleHelper {
                         System.out.println("Collection created");
                         break;
                     case("3"):
-                        if(customCollectionInitialized()){
-                        this.fill(reader.readString());
+                        if(isCustomCollectionInitialized()){
+                        customCollection.push(reader.readString());
                         } else {
                             System.out.println("The collection is not initialized");
                         }
                         break;
                     case("4"):
-                        if (customCollectionInitialized()){
+                        if (isCustomCollectionInitialized()){
                             System.out.println(customCollection.getList());
                         } else {
                             System.out.println("The collection is not initialized");
@@ -59,9 +59,6 @@ public class ConsoleHelper {
         }
     }
 
-
-    public void fill(String someWord){customCollection.push(someWord);}
-
-    private boolean customCollectionInitialized(){return  customCollection != null;}
+    private boolean isCustomCollectionInitialized(){return  customCollection != null;}
 
 }
