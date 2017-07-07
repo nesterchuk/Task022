@@ -1,17 +1,17 @@
-import java.io.IOException;
-
 public class ConsoleHelper {
+    CustomCollection<String> customCollection = null;
+
     public void start() {
         String choice ="";
-        FixedList<String> fixedList = null;
         while (!choice.equals("0")) {
             ConsoleReader reader = new ConsoleReader();
-            while ((fixedList == null) && !choice.equals("0")){
                 System.out.print(
                         "Menu: \n" +
                                 " 0) Exit \n" +
-                                " 2) Create a standard collection \n" +
                                 " 1) Create Collection of specified size \n" +
+                                " 2) Create a standard collection \n" +
+                                " 3) Add item to collection \n" +
+                                " 4) Show collection \n" +
                                 " Select from the list: "
                 );
                 choice = reader.readString();
@@ -19,44 +19,49 @@ public class ConsoleHelper {
                     case ("0"):
                         break;
                     case ("1"):
+                        if (customCollectionInitialized()){
+                            System.out.println("The collection is already initialized");
+                             break;
+                        }
                         System.out.print("Enter the size of the collection: ");
-                            fixedList = new FixedList<String>(reader.readInteger());
+                        try {
+                            customCollection = new CustomCollection<String>(reader.readInteger());
                             System.out.println("Collection created");
-                        break;
-                    case ("2"):
-                        fixedList = new FixedList<>();
-                        System.out.println("Collection created");
-                        break;
-                    default:
-                        System.out.println("This item does not exist");
-
-                }
-            }
-
-            if (choice.equals("0")){
-                break;
-            }
-
-            System.out.print(
-                    "Menu: \n" +
-                            " 0) Exit \n" +
-                            " 2) Add item to collection \n" +
-                            " 3) Show collection \n" +
-                            " Select from the list: "
-            );
-            choice = reader.readString();
-                switch (choice) {
-                    case ("0"):
+                        } catch (NotCorrectSizeException e){
+                            System.out.println("The collection is not initialized (Invalid size)");
+                        }
                         break;
                     case("2"):
-                        fixedList.push(reader.readString());
+                        if (customCollectionInitialized()){
+                            System.out.println("The collection is already initialized");
+                            break;
+                        }
+                        customCollection = new CustomCollection<>();
+                        System.out.println("Collection created");
                         break;
                     case("3"):
-                        System.out.println(fixedList.getList());
+                        if(customCollectionInitialized()){
+                        this.fill(reader.readString());
+                        } else {
+                            System.out.println("The collection is not initialized");
+                        }
+                        break;
+                    case("4"):
+                        if (customCollectionInitialized()){
+                            System.out.println(customCollection.getList());
+                        } else {
+                            System.out.println("The collection is not initialized");
+                        }
                         break;
                     default:
                         System.out.println("This item does not exist");
-            }
+                }
         }
     }
+
+
+    public void fill(String someWord){customCollection.push(someWord);}
+
+    private boolean customCollectionInitialized(){return  customCollection != null;}
+
 }

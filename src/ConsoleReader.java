@@ -14,6 +14,7 @@ public class ConsoleReader  {
                 doesRead = true;
             } catch (NumberFormatException|IOException e){}
         } while (!doesRead);
+
      return integer;
     }
 
@@ -23,4 +24,6 @@ public class ConsoleReader  {
             return reader.readLine().trim();
         } catch (Exception e){ return "";}
     }
+
+
 }
